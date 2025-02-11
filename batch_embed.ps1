@@ -14,8 +14,8 @@ if (-not (Test-Path -Path $directory -PathType Container)) {
 }
 
 # Get all M4V and SRT files in the directory
-$videos = Get-ChildItem -Path $directory -Filter "*.m4v" | ForEach-Object { $_.BaseName, $_.FullName } | ConvertFrom-Csv -Header "BaseName", "Path"
-$subtitles = Get-ChildItem -Path $directory -Filter "*.srt" | ForEach-Object { $_.BaseName, $_.FullName } | ConvertFrom-Csv -Header "BaseName", "Path"
+$videos = Get-ChildItem -Path $directory -Filter "*.m4v" | Select-Object @{Name='BaseName';Expression={$_.BaseName}}, @{Name='Path';Expression={$_.FullName}}
+$subtitles = Get-ChildItem -Path $directory -Filter "*.srt" | Select-Object @{Name='BaseName';Expression={$_.BaseName}}, @{Name='Path';Expression={$_.FullName}}
 
 # Match videos with their corresponding subtitles
 $matchedPairs = @{}
